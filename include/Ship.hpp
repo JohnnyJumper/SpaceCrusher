@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:10:56 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 04:25:41 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:54:24 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ class	AShip
 		int		_hp;
 		char	_represent;
 		int 	_speed;
+		int 	_fireChance;
+		int 	_isEnemy;
 
 	public:
 		AShip(int rep, int x, int y, int hp, int speed);
@@ -30,17 +32,22 @@ class	AShip
 
 		void update();
 
+
+		bool isEnemy();
 		int getX();
 		int getY();
 		int getHP();
 		int getRep();
 		int getSpeed();
+		int getFireChance();
 
 		void setX(int x);
 		void setY(int y);
 		void setHP(int hp);
 		void setRep(int rep);
 		void setSpeed(int speed);
+		void setFireChance(int chance);
+		void makeEnemy();
 		
 		void	draw(void);
 		void	moveLeft(void);
