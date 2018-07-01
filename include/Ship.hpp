@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Ship.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:10:56 by psprawka          #+#    #+#             */
-/*   Updated: 2018/06/30 21:41:40 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/06/30 23:39:02 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHIP_HPP
 # define SHIP_HPP
+# include "Bullet.hpp"
 
 class	AShip
 {
@@ -26,6 +27,8 @@ class	AShip
 		void	draw(void);
 		void	moveLeft(void);
 		void	moveRight(void);
+
+		ABullet	*shoot(void);
 };
 
 class	ShipNormal : public AShip

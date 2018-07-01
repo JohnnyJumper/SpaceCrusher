@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ship.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:03 by psprawka          #+#    #+#             */
-/*   Updated: 2018/06/30 21:42:30 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/06/30 23:38:38 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ void	AShip::moveLeft(void)
 void	AShip::moveRight(void)
 {
 	this->_x++;
+}
+
+ABullet 	*AShip::shoot(void) {
+	ABullet 	*bullet;
+
+	bullet = new DefaultBullet(this->_x, this->_y - 1, -1);
+	return bullet;
 }
 
 /*

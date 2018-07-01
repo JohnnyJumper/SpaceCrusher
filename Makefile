@@ -1,6 +1,6 @@
 NAME = ft_retro
 CC = clang++
-CFLAGS = -Wall -Wextra -Werror -lncurses
+CFLAGS = -Wall -Wextra
 DEBUG = -g
 
 SRC_PATH = ./src/
@@ -8,7 +8,7 @@ EXE_PATH = ./bin/
 INCLUDE_PATH = ./include/
 OBJ_PATH = ./obj/
 
-SRC_NAME = main.cpp Ship.cpp Bullet.cpp
+SRC_NAME = Ship.cpp Bullet.cpp main.cpp
 
 SRC = $(patsubst %, $(SRC_PATH)%, $(SRC_NAME))
 
@@ -18,7 +18,7 @@ OBJ = $(patsubst %, $(OBJ_PATH)%, $(OBJ_NAME))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) -o $@ $(CFLAGS) $(DEBUG) $(OBJ) $(LDLIBS) -I$(INCLUDE_PATH)
+	$(CC) -o $@ $(CFLAGS) $(DEBUG) $(OBJ) $(LDLIBS) -I$(INCLUDE_PATH) -lncurses
 	@mkdir -p $(EXE_PATH)
 	@cp $(NAME) $(EXE_PATH)
 

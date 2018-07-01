@@ -6,12 +6,14 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:21 by psprawka          #+#    #+#             */
-/*   Updated: 2018/06/30 23:01:08 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/06/30 23:28:55 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BULLET_HPP
 # define BULLET_HPP
+
+# define maxBullets 100
 
 class ABullet {
 	private: 
@@ -21,7 +23,7 @@ class ABullet {
 		int 	_dir; // positive for down and negative for up
 	
 	public:
-		ABullet(char rep, int x, int y;
+		ABullet(char rep, int x, int y, int dir, int speed);
 		~ABullet(void);
 
 		void 	update();
@@ -49,7 +51,7 @@ class ABullet {
 class DefaultBullet : public ABullet {
 
 	public:
-		DefaultBullet(int x, int y);
+		DefaultBullet(int x, int y, int dir);
 		~DefaultBullet(void);
 
 };
