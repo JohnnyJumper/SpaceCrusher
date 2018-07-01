@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ship.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:03 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 15:44:11 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:58:03 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void 	AShip::moveDown(void) {
 ABullet 	*AShip::shoot(void) {
 	ABullet 	*bullet;
 
-	bullet = new DefaultBullet(this->_x, this->_y - 1, -1);
+	if (this->_isEnemy)
+		bullet = new DefaultBullet(this->_x, this->_y + 1, true);
+	else
+		bullet = new DefaultBullet(this->_x, this->_y - 1, -1);
 	return bullet;
 }
 
@@ -88,18 +91,22 @@ AShip::~AShip(void) {}
 ** -------------------------------- Setters / Getters ----------------------------------
 */
 
+	bool AShip::isEnemy() { return this->_isEnemy; }
 	int AShip::getX() { return this->_x; }
 	int AShip::getY() { return this->_y; }
 	int AShip::getHP() { return this->_hp; }
 	int AShip::getRep() { return this->_represent; }
 	int AShip::getSpeed() { return this->_speed; }
+	int AShip::getFireChance() { if(this->_fireChance) return this->_fireChance; else return -1; }
 
 	void AShip::setX(int x) {this->_x = x;}
 	void AShip::setY(int y) {this->_y = y;}
 	void AShip::setHP(int hp) {this->_hp = hp;}
 	void AShip::setRep(int rep) {this->_represent = rep;}
 	void AShip::setSpeed(int speed) {this->_speed = speed;}
-	
+	void AShip::setFireChance(int chance) {this->_fireChance = chance;}
+	void AShip::makeEnemy(void) { this->_isEnemy = true; }
+
 /*
 ** -------------------------------- SHIP_NORMAL -------------------------------
 */
@@ -118,5 +125,7 @@ ShipNormal::ShipNormal(int maxX, int level) : AShip('@',0,0,0,0) {
 	this->setX(randomX);
 	this->setY(level);
 	this->setHP(1);
-	this->setSpeed(-1);	
+	this->setSpeed(-1);
+	this->setFireChance(5);
+	this->makeEnemy();
 }

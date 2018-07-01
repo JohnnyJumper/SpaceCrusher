@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 16:09:34 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 16:15:23 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void Game::spawnEnemies(int level) {
 }
 
 void Game::enemyRoutine(void) {
+	int 	dice;
 
 	if (!this->_numberEnemies) // If no enemies create new wave of enemies!
 		this->spawnEnemies(this->_wave++);
@@ -187,6 +188,10 @@ void Game::enemyRoutine(void) {
 		// These function corresponds to logic of each enemy.
 		// update changes it's coordinate randomly
 		// draw draws them on the board
+		dice = rand() % 100;
+		if (dice < this->enemy[i]->getFireChance())
+			this->bullets[this->_numberBullets++] = this->enemy[i]->shoot();
+
 		this->enemy[i]->update();
 		this->enemy[i]->draw();
 		// End of routine. :) 

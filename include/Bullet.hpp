@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:21 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 02:37:51 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:47:42 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ class DefaultBullet : public ABullet {
 
 	public:
 		DefaultBullet(int x, int y, int dir);
+		DefaultBullet(int x, int y, bool enemy);
 		~DefaultBullet(void);
+		
 
 };
 

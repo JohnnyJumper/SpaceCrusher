@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:29 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 02:00:28 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:56:26 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ void 	ABullet::draw() {
 ** ----------------------------- Default Bullet -------------------
 */
 
-DefaultBullet::DefaultBullet(int x, int y, int dir) : ABullet('|', x, y, dir, 1) {};
-DefaultBullet::~DefaultBullet(void) {};
+DefaultBullet::DefaultBullet(int x, int y, int dir) : ABullet('|', x, y, dir, 1) {}
+DefaultBullet::~DefaultBullet(void) {}
+DefaultBullet::DefaultBullet(int x, int y, bool enemy) : ABullet('|', x, y, 1, 1) { (void) enemy; }
