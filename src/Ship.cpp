@@ -6,31 +6,37 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:03 by psprawka          #+#    #+#             */
-/*   Updated: 2018/06/30 23:38:38 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 04:58:53 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Ship.hpp"
-#include <curses.h>
+#include <ncurses.h>
 #include <iostream>
+
+#define debug(x, z) (mvprintw(10, 10, x, z))
 
 /*
 ** -------------------------------- FUNCTIONS ----------------------------------
 */
-void	AShip::draw(void)
-{
-	mvprintw(this->_y, this->_x, "A");
-	this->_represent = 'x';
+void	AShip::draw(void) {
+	mvaddch(this->_y, this->_x, this->_represent);
 }
 
-void	AShip::moveLeft(void)
-{
+void	AShip::moveLeft(void) {
 	this->_x = std::max(0, this->_x - 1);
 }
 
-void	AShip::moveRight(void)
-{
-	this->_x++;
+void	AShip::moveRight(void) {
+	this->_x += this->_speed;
+}
+
+void 	AShip::moveUp(void) {
+	this->_y -= this->_speed;
+}
+
+void 	AShip::moveDown(void) {
+	this->_y += this->_speed;
 }
 
 ABullet 	*AShip::shoot(void) {
@@ -40,12 +46,60 @@ ABullet 	*AShip::shoot(void) {
 	return bullet;
 }
 
+void 	AShip::update() {
+	int 	randomNumber;
+
+	randomNumber = rand() % 3;
+	switch(randomNumber)
+	{
+		case 0: //Moving forward
+			this->_y -= this->_speed;
+		case 1: // Moving right (?)
+			this->_x += this->_speed;
+		case 2: // Moving left (?)
+			this->_x -= this->_speed;
+	}
+}
+
+
 /*
 ** -------------------------------- CANONICAL ----------------------------------
 */
-AShip::AShip(char rep): _represent(rep)
-{
-	this->_x = rand() % 10; // 10 = mapsize
-	this->_y = 20;
-	this->_hp = 100;
+AShip::AShip(int rep, int x, int y, int hp, int speed): _x(x), _y(y), _hp(hp), _represent(rep), _speed(speed) {}
+AShip::~AShip(void) {}
+
+
+/*
+** -------------------------------- Setters / Getters ----------------------------------
+*/
+
+	int AShip::getX() { return this->_x; }
+	int AShip::getY() { return this->_y; }
+	int AShip::getHP() { return this->_hp; }
+	int AShip::getRep() { return this->_represent; }
+	int AShip::getSpeed() { return this->_speed; }
+
+	void AShip::setX(int x) {this->_x = x;}
+	void AShip::setY(int y) {this->_y = y;}
+	void AShip::setHP(int hp) {this->_hp = hp;}
+	void AShip::setRep(int rep) {this->_represent = rep;}
+	void AShip::setSpeed(int speed) {this->_speed = speed;}
+	
+/*
+** -------------------------------- SHIP_NORMAL -------------------------------
+*/
+
+ShipNormal::ShipNormal(int rep) : AShip(rep, (50), (50), 3, 1) {}
+ShipNormal::ShipNormal(int rep, int x, int y, int hp, int speed) : AShip(rep, x, y, hp, speed) {}
+ShipNormal::~ShipNormal(void) {}
+
+ShipNormal::ShipNormal(int maxX, int level) : AShip('@',0,0,0,0) {
+	int 	randomX;
+
+	randomX = rand() % maxX;
+	this->setRep('X');
+	this->setX(randomX);
+	this->setY(level);
+	this->setHP(1);
+	this->setSpeed(-1);	
 }

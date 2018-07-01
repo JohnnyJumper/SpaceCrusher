@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:29 by psprawka          #+#    #+#             */
-/*   Updated: 2018/06/30 23:32:27 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 02:00:28 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void 	ABullet::update()
 }
 
 void 	ABullet::draw() {
-
-	// mvprintw(this->_y, this->_x, "A");
 	mvprintw(this->_y, this->_x, &this->_represent);
 }
 

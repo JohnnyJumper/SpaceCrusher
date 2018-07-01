@@ -8,7 +8,7 @@ EXE_PATH = ./bin/
 INCLUDE_PATH = ./include/
 OBJ_PATH = ./obj/
 
-SRC_NAME = Ship.cpp Bullet.cpp main.cpp
+SRC_NAME = Ship.cpp Bullet.cpp main.cpp Game.cpp
 
 SRC = $(patsubst %, $(SRC_PATH)%, $(SRC_NAME))
 
