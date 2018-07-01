@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:03 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 14:19:19 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:40:51 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,28 @@ ABullet 	*AShip::shoot(void) {
 
 void 	AShip::update() {
 	int 	randomNumber;
+	int 	delay;
 
 	randomNumber = rand() % 3;
+	delay = rand() % 10;
 	switch(randomNumber)
 	{
 		case 0: //Moving forward
 		{
-			this->_y -= this->_speed;
+			if (delay == 0)
+				this->_y -= this->_speed;
 			break ;
 		}
 		case 1: // Moving right (?)
 		{
-			this->_x += this->_speed;
+			if (delay == 0)
+				this->_x += this->_speed;
 			break ;
 		}
 		case 2: // Moving left (?)
 		{
-			this->_x -= this->_speed;
+			if (delay == 0)
+				this->_x -= this->_speed;
 			break ;
 		}
 	}

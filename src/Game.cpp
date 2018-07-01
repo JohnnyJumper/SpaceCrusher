@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 14:16:12 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:40:58 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <ncurses.h>
 #include <fcntl.h>
 
-#define DELAY 60000
+#define DELAY 30000
 #define debug(x, z) (mvprintw(10, 10, x, z)) // x is format and z is the wvlue only one undortunately .
 
 
@@ -47,6 +47,7 @@ void		Game::checkCollision()
 	char	*tty = "/dev/ttys002";
 	int		fd = open(tty, O_WRONLY);
 
+	//this part checks player-enemy collision
 	for (int i = 0; i < _numberEnemies; i++)
 	{
 		if (this->enemy[i] && this->enemy[i]->getX() == this->player->getX() &&
@@ -60,6 +61,27 @@ void		Game::checkCollision()
 				exit(1);
 		}
 	}
+	
+	//this part checks bullet-enemy collision
+	for (int i = 0; i < _numberBullets; i++)
+	{
+		if (!this->bullets[i])
+			continue;
+			
+		for (int j = 0; j < _numberEnemies; j++)
+		{
+			if (this->enemy[j] && this->enemy[j]->getX() == this->bullets[i]->getX() &&
+				this->enemy[j]->getY() == this->bullets[i]->getY())
+			{
+					delete this->enemy[j];
+					this->enemy[j] = NULL;
+					for (int x = j; x < this->_numberEnemies && enemy[x]; x++)
+						enemy[x] = enemy[x + 1];
+					this->_numberEnemies--;
+			}
+		}
+	}
+
 }
 	
 //Game::bulletsRoutine handles all logic regarding bullets
@@ -153,6 +175,8 @@ void Game::enemyRoutine(void) {
 		if (tempx > this->_maxX || tempy > this->_maxY) { //<-- this just removes random ships
 			delete this->enemy[i];
 			this->enemy[i] = NULL;
+			for (int x = i; x < this->_numberEnemies && enemy[x]; x++)
+				enemy[x] = enemy[x + 1];
 			this->_numberEnemies--;
 			continue ;
 		}
