@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:01:02 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 16:15:02 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 16:17:18 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Game {
 		ABullet		*bullets[maxBullets];
 		int 		_numberBullets;
 		int 		_numberEnemies;
+		int 		_numberEnemiesFixed;
 		int 		_maxY, _maxX;
 		int 		_wave;
 		int 		_playerScore;
