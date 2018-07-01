@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:01:02 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 15:47:36 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 16:17:18 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ class Game {
 		int 		_numberEnemiesFixed;
 		int 		_maxY, _maxX;
 		int 		_wave;
+		int 		_playerScore;
 		
 		void 		bulletsRoutine();
 		void 		enemyRoutine();
 		void 		userHandle();
 		void 		spawnEnemies(int level);
 		void		checkCollision();
+		void 		drawGameInfo();
 
 	public:
 		Game();
