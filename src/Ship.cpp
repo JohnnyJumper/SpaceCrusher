@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:03 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 04:58:53 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 05:21:46 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	AShip::draw(void) {
 void	AShip::moveLeft(void) {
 	this->_x = std::max(0, this->_x - 1);
 }
-
 void	AShip::moveRight(void) {
 	this->_x += this->_speed;
 }
@@ -93,6 +92,8 @@ ShipNormal::ShipNormal(int rep) : AShip(rep, (50), (50), 3, 1) {}
 ShipNormal::ShipNormal(int rep, int x, int y, int hp, int speed) : AShip(rep, x, y, hp, speed) {}
 ShipNormal::~ShipNormal(void) {}
 
+
+// Specific constructo use only and only with enemy ships !
 ShipNormal::ShipNormal(int maxX, int level) : AShip('@',0,0,0,0) {
 	int 	randomX;
 
