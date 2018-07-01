@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 15:44:44 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 16:09:34 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ Game::Game(){
 	this->player = new ShipNormal('A', (this->_maxX / 2), (this->_maxY - 10), 100, 1);
 	this->_numberBullets = 0;
 	this->_numberEnemies = 0;
+	this->_numberEnemiesFixed = 0;
 	this->_wave = 5;
 }
 Game::~Game(){
@@ -70,15 +71,17 @@ void		Game::checkCollision()
 		if (!this->bullets[i])
 			continue;
 			
-		for (int j = 0; j < _numberEnemies; j++)
+		for (int j = 0; j < _numberEnemiesFixed; j++)
 		{
 			if (this->enemy[j] && this->enemy[j]->getX() == this->bullets[i]->getX() &&
 				this->enemy[j]->getY() == this->bullets[i]->getY())
 			{
 					delete this->enemy[j];
 					this->enemy[j] = NULL;
-					for (int x = j; x < this->_numberEnemies && enemy[x]; x++)
-						enemy[x] = enemy[x + 1];
+					dprintf(fd, "byeeee im killed (enemy) %d\n", this->_numberEnemies);
+					sleep(2);
+					// for (int x = j; x < this->_numberEnemies && enemy[x]; x++)
+					// 	enemy[x] = enemy[x + 1];
 					this->_numberEnemies--;
 			}
 		}
@@ -158,13 +161,14 @@ void Game::spawnEnemies(int level) {
 																//ship but with this specificly overloaded constructo
 	}
 	this->_numberEnemies = level; // Number of Enemies  = current level. 
+	this->_numberEnemiesFixed = level;
 }
 
 void Game::enemyRoutine(void) {
 
-	if (this->_numberEnemies < 5) // If no enemies create new wave of enemies!
+	if (!this->_numberEnemies) // If no enemies create new wave of enemies!
 		this->spawnEnemies(this->_wave++);
-	for (int i = 0; i < this->_numberEnemies; i++) {
+	for (int i = 0; i < this->_numberEnemiesFixed; i++) {
 		// check if this enemy is not dead
 		if (!this->enemy[i])
 			continue ;
@@ -177,8 +181,6 @@ void Game::enemyRoutine(void) {
 		if (tempx > this->_maxX || tempy > this->_maxY) { //<-- this just removes random ships
 			delete this->enemy[i];
 			this->enemy[i] = NULL;
-			for (int x = i; x < this->_numberEnemies && enemy[x]; x++)
-				enemy[x] = enemy[x + 1];
 			this->_numberEnemies--;
 			continue ;
 		}

@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:01:02 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 13:48:16 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:47:36 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Game {
 		ABullet		*bullets[maxBullets];
 		int 		_numberBullets;
 		int 		_numberEnemies;
+		int 		_numberEnemiesFixed;
 		int 		_maxY, _maxX;
 		int 		_wave;
 		
