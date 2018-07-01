@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 15:40:58 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:44:44 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ Game::Game(){
 	cbreak();
 	noecho();
 	nodelay(stdscr, true);
+	start_color();			/* Start color 			*/
+	init_pair(1, COLOR_RED, COLOR_BLACK);
 	getmaxyx(stdscr, this->_maxY, this->_maxX);
 	srand(time(NULL));
 	this->player = new ShipNormal('A', (this->_maxX / 2), (this->_maxY - 10), 100, 1);
@@ -206,7 +208,9 @@ void Game::start()  // Main Loop of the game
 			in case if bullet hit player well i don't know substract 1 life make it blink for 3 secs and put it in the origin
 			or something like this up to you...
 		*/
+		attron(COLOR_PAIR(1));
 		this->player->draw(); // Drawing player
+		attroff(COLOR_PAIR(1));
 		this->userHandle(); // Getting input and changing players position correspondigly
 		this->checkCollision(); //Checking if a shit hit a player
 		refresh(); // I have no fucking idea whether we need to refresh after clear or not.

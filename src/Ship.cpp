@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:03 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 15:40:51 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 15:44:11 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,8 @@
 ** -------------------------------- FUNCTIONS ----------------------------------
 */
 void	AShip::draw(void) {
-	start_color();			/* Start color 			*/
-	init_pair(1, COLOR_RED, COLOR_BLACK);
-	attron(COLOR_PAIR(1));
+	
 	mvaddch(this->_y, this->_x, this->_represent);
-	refresh();
-	attroff(COLOR_PAIR(1));
 }
 
 void	AShip::moveLeft(void) {
