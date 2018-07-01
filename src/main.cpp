@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 20:04:19 by psprawka          #+#    #+#             */
-/*   Updated: 2018/06/30 21:41:59 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/06/30 23:03:25 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <curses.h>
 #include <unistd.h>
 #include "Ship.hpp"
+#include "Bullet.hpp"
 
 #define DELAY 30000
 
@@ -48,7 +49,7 @@ int main(void)
 			}
 			case ' ':
 			{
-				//shooting
+				
 				break;
 			}
 		}
