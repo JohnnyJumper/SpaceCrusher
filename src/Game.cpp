@@ -24,7 +24,6 @@ Game::Game(){
 	initscr();
 	curs_set(false);
 	keypad(stdscr, true);
-	cbreak();
 	noecho();
 	nodelay(stdscr, true);
 	start_color();			/* Start color 			*/
@@ -57,6 +56,7 @@ void		Game::checkCollision()
 			this->enemy[i]->getY() == this->player->getY())
 		{
 				mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
+				mvprintw(this->_maxY / 2 + 3, this->_maxX / 2 - 9, "Your score is %d", this->_playerScore);
 				refresh(); 
 				dprintf(fd, "you sucker they hit you, game over\n");
 				sleep(3);
