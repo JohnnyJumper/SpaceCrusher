@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:29 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 15:56:26 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 16:09:31 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ void 	ABullet::setX(int x) {  this->_x = x; }
 void 	ABullet::setY(int y) {  this->_y = y; }
 void 	ABullet::setDir(int dir ) {  this->_dir = dir; }
 
-void 	ABullet::update() 
-{
+void 	ABullet::update() {
 	this->_y += this->_dir * this->_speed;
 }
 
 void 	ABullet::draw() {
-	mvprintw(this->_y, this->_x, &this->_represent);
+	mvaddch(this->_y, this->_x, this->_represent);
 }
 
 /*

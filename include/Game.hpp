@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:01:02 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 13:48:16 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 16:15:02 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ class Game {
 		int 		_numberEnemies;
 		int 		_maxY, _maxX;
 		int 		_wave;
+		int 		_playerScore;
 		
 		void 		bulletsRoutine();
 		void 		enemyRoutine();
 		void 		userHandle();
 		void 		spawnEnemies(int level);
 		void		checkCollision();
+		void 		drawGameInfo();
 
 	public:
 		Game();

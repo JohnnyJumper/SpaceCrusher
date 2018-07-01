@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 15:52:41 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 16:15:32 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ Game::Game(){
 	this->player = new ShipNormal('A', (this->_maxX / 2), (this->_maxY - 10), 100, 1);
 	this->_numberBullets = 0;
 	this->_numberEnemies = 0;
+	this->_playerScore = 0;
 	this->_wave = 5;
 }
 Game::~Game(){
@@ -80,6 +81,7 @@ void		Game::checkCollision()
 					for (int x = j; x < this->_numberEnemies && enemy[x]; x++)
 						enemy[x] = enemy[x + 1];
 					this->_numberEnemies--;
+					this->_playerScore++;
 			}
 		}
 	}
@@ -104,9 +106,7 @@ void Game::bulletsRoutine(){
 			delete bullets[i];
 			bullets[i] = NULL;
 			for (int j = i; j < this->_numberBullets && bullets[i]; j++)
-			{
 				bullets[j] = bullets[j + 1];
-			}
 			this->_numberBullets--;
 			continue;
 		}
@@ -197,6 +197,12 @@ void Game::enemyRoutine(void) {
 }
 
 
+void 	Game::drawGameInfo()
+{
+	mvprintw(this->_maxY - 1, 2, "Score: %d", this->_playerScore);
+}
+
+
 
 void Game::start()  // Main Loop of the game
 {
@@ -218,6 +224,7 @@ void Game::start()  // Main Loop of the game
 		attroff(COLOR_PAIR(1));
 		this->userHandle(); // Getting input and changing players position correspondigly
 		this->checkCollision(); //Checking if a shit hit a player
+		this->drawGameInfo();
 		refresh(); // I have no fucking idea whether we need to refresh after clear or not.
 		usleep(DELAY); // HOW THIS WORKS? O_O 
 		
