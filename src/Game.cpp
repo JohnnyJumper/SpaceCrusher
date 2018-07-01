@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 05:22:19 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 14:16:12 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Game.hpp"
 #include <unistd.h>
 #include <ncurses.h>
+#include <fcntl.h>
 
 #define DELAY 60000
 #define debug(x, z) (mvprintw(10, 10, x, z)) // x is format and z is the wvlue only one undortunately .
@@ -41,7 +42,26 @@ Game::~Game(){
 	delete this->player;
 }
 
+void		Game::checkCollision()
+{
+	char	*tty = "/dev/ttys002";
+	int		fd = open(tty, O_WRONLY);
 
+	for (int i = 0; i < _numberEnemies; i++)
+	{
+		if (this->enemy[i] && this->enemy[i]->getX() == this->player->getX() &&
+			this->enemy[i]->getY() == this->player->getY())
+		{
+				mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
+				refresh(); 
+				dprintf(fd, "you sucker they hit you, game over\n");
+				sleep(3);
+				this->end();
+				exit(1);
+		}
+	}
+}
+	
 //Game::bulletsRoutine handles all logic regarding bullets
 void Game::bulletsRoutine(){
 	for (int i = this->_numberBullets; i >= 0; i--)
@@ -118,7 +138,7 @@ void Game::spawnEnemies(int level) {
 
 void Game::enemyRoutine(void) {
 
-	if (this->_numberEnemies == 0) // If no enemies create new wave of enemies!
+	if (this->_numberEnemies < 5) // If no enemies create new wave of enemies!
 		this->spawnEnemies(this->_wave++);
 	for (int i = 0; i < this->_numberEnemies; i++) {
 		// check if this enemy is not dead
@@ -130,12 +150,12 @@ void Game::enemyRoutine(void) {
 		// check if enemy managed to get outside of the board
 		// and if so kill it. After make enemy[i] == NULL and decrease amount of Enemies;
 		// Start loop over.
-		if (tempx > this->_maxX || tempy > this->_maxY) {
+		if (tempx > this->_maxX || tempy > this->_maxY) { //<-- this just removes random ships
 			delete this->enemy[i];
 			this->enemy[i] = NULL;
 			this->_numberEnemies--;
 			continue ;
-		}	
+		}
 		// These function corresponds to logic of each enemy.
 		// update changes it's coordinate randomly
 		// draw draws them on the board
@@ -145,12 +165,14 @@ void Game::enemyRoutine(void) {
 	}
 }
 
+
+
 void Game::start()  // Main Loop of the game
 {
 	while (true)
 	{
 		clear(); // Clear... really... just clear...
-		refresh(); // I have no fucking idea whether we need to refresh after clear or not.
+		
 		box(stdscr, 0, 0); // Draw a box around terminal
 		this->enemyRoutine(); // All logic for enemies
 		this->bulletsRoutine(); // All logic for bullets
@@ -162,6 +184,17 @@ void Game::start()  // Main Loop of the game
 		*/
 		this->player->draw(); // Drawing player
 		this->userHandle(); // Getting input and changing players position correspondigly
+		this->checkCollision(); //Checking if a shit hit a player
+		refresh(); // I have no fucking idea whether we need to refresh after clear or not.
 		usleep(DELAY); // HOW THIS WORKS? O_O 
+		
 	}
+}
+
+void Game::end()  // Main Loop of the game
+{
+	refresh();
+	endwin();
+	system("reset");
+	this->~Game();
 }

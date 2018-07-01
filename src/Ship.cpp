@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Ship.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:03 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 05:21:46 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 14:19:19 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Ship.hpp"
 #include <ncurses.h>
 #include <iostream>
+#include <fcntl.h>
 
 #define debug(x, z) (mvprintw(10, 10, x, z))
 
@@ -20,7 +21,12 @@
 ** -------------------------------- FUNCTIONS ----------------------------------
 */
 void	AShip::draw(void) {
+	start_color();			/* Start color 			*/
+	init_pair(1, COLOR_RED, COLOR_BLACK);
+	attron(COLOR_PAIR(1));
 	mvaddch(this->_y, this->_x, this->_represent);
+	refresh();
+	attroff(COLOR_PAIR(1));
 }
 
 void	AShip::moveLeft(void) {
@@ -52,11 +58,20 @@ void 	AShip::update() {
 	switch(randomNumber)
 	{
 		case 0: //Moving forward
+		{
 			this->_y -= this->_speed;
+			break ;
+		}
 		case 1: // Moving right (?)
+		{
 			this->_x += this->_speed;
+			break ;
+		}
 		case 2: // Moving left (?)
+		{
 			this->_x -= this->_speed;
+			break ;
+		}
 	}
 }
 

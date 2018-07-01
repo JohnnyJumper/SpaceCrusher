@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 20:04:19 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 03:06:23 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 13:49:47 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int 	main(void)
 {
 	Game 	*game = new Game();
 
+	srand (time(NULL));
 	game->start();
-	refresh();
-	endwin();
+	game->end();
 	delete game;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:01:02 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 03:59:49 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 13:48:16 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "Ship.hpp"
 
 # define maxShip 25
-# define maxBullets 30
+# define maxBullets 300
 
 class Game {
 	
@@ -37,18 +37,14 @@ class Game {
 		void 		enemyRoutine();
 		void 		userHandle();
 		void 		spawnEnemies(int level);
-
-
+		void		checkCollision();
 
 	public:
 		Game();
 		~Game();
 
 		void 	start();
-
-
-
-
+		void	end();
 };
 
 #endif
