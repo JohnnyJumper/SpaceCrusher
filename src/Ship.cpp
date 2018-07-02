@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Ship.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:03 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 16:08:43 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 16:24:04 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,6 @@ ShipNormal::ShipNormal(int maxX, int level) : AShip('@',0,0,0,0) {
 	this->setY(level);
 	this->setHP(1);
 	this->setSpeed(-1);
-	this->setFireChance(5);
+	this->setFireChance(1);
 	this->makeEnemy();
 }

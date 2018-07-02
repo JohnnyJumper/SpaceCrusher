@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 16:17:06 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 18:42:54 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,24 @@ Game::~Game(){
 
 void		Game::checkCollision()
 {
-	char	*tty = "/dev/ttys002";
-	int		fd = open(tty, O_WRONLY);
+	// char	*tty = "/dev/ttys002";
+	// int		fd = open(tty, O_WRONLY);
 
 	//this part checks player-enemy collision
-	for (int i = 0; i < _numberEnemies; i++)
+	for (int i = 0; i < _numberEnemiesFixed; i++)
 	{
 		if (this->enemy[i] && this->enemy[i]->getX() == this->player->getX() &&
 			this->enemy[i]->getY() == this->player->getY())
 		{
-				mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
-				refresh(); 
-				dprintf(fd, "you sucker they hit you, game over\n");
-				sleep(3);
-				this->end();
-				exit(1);
+			sleep(1);
+			system("killall -9 afplay");
+			this->playSound("sound/gameover2.wav");
+			mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
+			refresh();
+			// dprintf(fd, "you sucker they hit you, game over\n");
+			sleep(3);
+			this->end();
+			exit(1);
 		}
 	}
 	
@@ -76,19 +79,43 @@ void		Game::checkCollision()
 			if (this->enemy[j] && this->enemy[j]->getX() == this->bullets[i]->getX() &&
 				this->enemy[j]->getY() == this->bullets[i]->getY())
 			{
-					delete this->enemy[j];
-					this->enemy[j] = NULL;
-					dprintf(fd, "byeeee im killed (enemy) %d\n", this->_numberEnemies);
-					sleep(2);
-					// for (int x = j; x < this->_numberEnemies && enemy[x]; x++)
-					// 	enemy[x] = enemy[x + 1];
-					this->_numberEnemies--;
-					this->_playerScore++;
+				this->playSound("sound/destroy.mp3");
+				delete this->enemy[j];
+				this->enemy[j] = NULL;
+				this->_numberEnemies--;
+				this->_playerScore++;
 			}
 		}
 	}
 
+	//this part checks enemy bullet-player collision
+	for (int i = 0; i < _numberBullets; i++)
+	{
+		if (!this->bullets[i])
+			continue;
+			
+		if (this->player->getX() == this->bullets[i]->getX() &&
+			this->player->getY() == this->bullets[i]->getY())
+		{
+			system("killall -9 afplay");
+			this->playSound("sound/gameover2.wav");
+			mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
+			refresh(); 
+			sleep(3);
+			this->end();
+			exit(1);
+		}
+	}
 }
+
+void		Game::playSound(std::string file)
+{
+	std::string command;
+	command = "afplay " + file + " &";
+	system(command.data());
+}
+
+void		Game::drawBackground() {}
 	
 //Game::bulletsRoutine handles all logic regarding bullets
 void Game::bulletsRoutine(){
@@ -146,6 +173,7 @@ void Game::userHandle(void) {
 		}
 		case ' ':
 		{
+			this->playSound("sound/shoot.mp3");
 			this->bullets[this->_numberBullets++] = this->player->shoot();
 			break;
 		}
@@ -165,6 +193,7 @@ void Game::spawnEnemies(int level) {
 
 void Game::enemyRoutine(void) {
 	int 	dice;
+	
 
 	if (!this->_numberEnemies) // If no enemies create new wave of enemies!
 		this->spawnEnemies(this->_wave++);
@@ -224,8 +253,9 @@ void Game::start()  // Main Loop of the game
 		this->player->draw(); // Drawing player
 		attroff(COLOR_PAIR(1));
 		this->userHandle(); // Getting input and changing players position correspondigly
-		this->checkCollision(); //Checking if a shit hit a player
 		this->drawGameInfo();
+		this->checkCollision(); //Checking if a shit hit a player
+		this->drawBackground();
 		refresh(); // I have no fucking idea whether we need to refresh after clear or not.
 		usleep(DELAY); // HOW THIS WORKS? O_O 
 		
@@ -236,6 +266,8 @@ void Game::end()  // Main Loop of the game
 {
 	refresh();
 	endwin();
+	
+	system("killall -9 afplay");
 	system("reset");
 	this->~Game();
 }

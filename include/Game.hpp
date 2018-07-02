@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:01:02 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 16:17:18 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 18:13:02 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ class Game {
 		void 		spawnEnemies(int level);
 		void		checkCollision();
 		void 		drawGameInfo();
+		void 		drawBackground();
 
 	public:
 		Game();
 		~Game();
+		void		playSound(std::string file);
 
 		void 	start();
 		void	end();
