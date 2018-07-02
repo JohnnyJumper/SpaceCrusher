@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/30 19:11:21 by psprawka          #+#    #+#             */
-/*   Updated: 2018/07/01 15:47:42 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 18:02:39 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ class ABullet {
 		int 	_x, _y; // Coordinates
 		int 	_speed; // Speed of a bullet
 		char 	_represent;
-		int 	_dir; // positive for down and negative for up
+		int 	_dir; // positive for down and negative for up, true
 	
 	public:
 		ABullet(char rep, int x, int y, int dir, int speed);

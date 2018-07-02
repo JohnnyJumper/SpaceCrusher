@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 18:42:54 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 18:47:24 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ Game::Game(){
 	initscr();
 	curs_set(false);
 	keypad(stdscr, true);
-	cbreak();
 	noecho();
 	nodelay(stdscr, true);
 	start_color();			/* Start color 			*/
@@ -73,9 +72,13 @@ void		Game::checkCollision()
 	{
 		if (!this->bullets[i])
 			continue;
-			
+
+		if (this->bullets[i]->getX() == this->player->getX() && this->bullets[i]->getY() == this->player->getY())
+			this->end();
 		for (int j = 0; j < _numberEnemiesFixed; j++)
 		{
+			if (!this->enemy[j])
+				continue ;
 			if (this->enemy[j] && this->enemy[j]->getX() == this->bullets[i]->getX() &&
 				this->enemy[j]->getY() == this->bullets[i]->getY())
 			{
@@ -264,10 +267,14 @@ void Game::start()  // Main Loop of the game
 
 void Game::end()  // Main Loop of the game
 {
-	refresh();
+	mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
+	mvprintw(this->_maxY / 2 + 3, this->_maxX / 2 - 9, "Your score is %d", this->_playerScore);
+	refresh(); 
+	sleep(3);
 	endwin();
 	
 	system("killall -9 afplay");
 	system("reset");
+	exit(1);
 	this->~Game();
 }

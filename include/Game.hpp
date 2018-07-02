@@ -6,7 +6,7 @@
 /*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:01:02 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 18:13:02 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 18:47:10 by psprawka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "Ship.hpp"
 
 # define maxShip 25
-# define maxBullets 300
+# define maxBullets 200
 
 class Game {
 	
