@@ -6,7 +6,7 @@
 /*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 16:45:55 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 18:02:35 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,7 @@ void		Game::checkCollision()
 	{
 		if (this->enemy[i] && this->enemy[i]->getX() == this->player->getX() &&
 			this->enemy[i]->getY() == this->player->getY())
-		{
-				mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
-				mvprintw(this->_maxY / 2 + 3, this->_maxX / 2 - 9, "Your score is %d", this->_playerScore);
-				refresh(); 
-				dprintf(fd, "you sucker they hit you, game over\n");
-				sleep(3);
 				this->end();
-				exit(1);
-		}
 	}
 	
 	//this part checks bullet-enemy collision
@@ -70,7 +62,9 @@ void		Game::checkCollision()
 	{
 		if (!this->bullets[i])
 			continue;
-			
+
+		if (this->bullets[i]->getX() == this->player->getX() && this->bullets[i]->getY() == this->player->getY())
+			this->end();
 		for (int j = 0; j < _numberEnemies; j++)
 		{
 			if (this->enemy[j] && this->enemy[j]->getX() == this->bullets[i]->getX() &&
@@ -233,8 +227,12 @@ void Game::start()  // Main Loop of the game
 
 void Game::end()  // Main Loop of the game
 {
-	refresh();
+	mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
+	mvprintw(this->_maxY / 2 + 3, this->_maxX / 2 - 9, "Your score is %d", this->_playerScore);
+	refresh(); 
+	sleep(3);
 	endwin();
 	system("reset");
+	exit(1);
 	this->~Game();
 }
