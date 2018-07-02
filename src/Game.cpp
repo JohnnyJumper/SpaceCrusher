@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 18:47:24 by psprawka         ###   ########.fr       */
+/*   Updated: 2018/07/01 19:28:04 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ Game::Game(){
 	this->_numberBullets = 0;
 	this->_numberEnemies = 0;
 	this->_numberEnemiesFixed = 0;
-	this->_wave = 5;
+	this->_wave = 0;
 }
 Game::~Game(){
 	//Trying to delete each bullet that left then delete player. also need to delete enemies.
@@ -46,25 +46,13 @@ Game::~Game(){
 
 void		Game::checkCollision()
 {
-	// char	*tty = "/dev/ttys002";
-	// int		fd = open(tty, O_WRONLY);
 
 	//this part checks player-enemy collision
 	for (int i = 0; i < _numberEnemiesFixed; i++)
 	{
 		if (this->enemy[i] && this->enemy[i]->getX() == this->player->getX() &&
 			this->enemy[i]->getY() == this->player->getY())
-		{
-			sleep(1);
-			system("killall -9 afplay");
-			this->playSound("sound/gameover2.wav");
-			mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
-			refresh();
-			// dprintf(fd, "you sucker they hit you, game over\n");
-			sleep(3);
 			this->end();
-			exit(1);
-		}
 	}
 	
 	//this part checks bullet-enemy collision
@@ -100,11 +88,7 @@ void		Game::checkCollision()
 		if (this->player->getX() == this->bullets[i]->getX() &&
 			this->player->getY() == this->bullets[i]->getY())
 		{
-			system("killall -9 afplay");
-			this->playSound("sound/gameover2.wav");
-			mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
-			refresh(); 
-			sleep(3);
+			this->playSound("sound/destroy.mp3");
 			this->end();
 			exit(1);
 		}
@@ -184,8 +168,18 @@ void Game::userHandle(void) {
 }
 
 void Game::spawnEnemies(int level) {
-	if (level > maxShip - 1)
-	 	return ; // WE JUST WON THE GAME!
+	if (level > maxShip)
+	{
+		mvprintw(this->_maxY / 2, this->_maxX / 2 - 6, "You Won! :)");
+		mvprintw(this->_maxY / 2 + 3, this->_maxX / 2 - 9, "Your score is %d", this->_playerScore);
+		refresh(); 
+		system("killall -9 afplay");
+		sleep(3);
+		endwin();
+		system("reset");
+		this->~Game();
+		exit(1);
+	}
 	for (int i = 0; i < level && i < maxShip; i++) {
 		this->enemy[i] = new ShipNormal(this->_maxX, level); // Create Enemy ship that is the normal 
 																//ship but with this specificly overloaded constructo
@@ -196,10 +190,9 @@ void Game::spawnEnemies(int level) {
 
 void Game::enemyRoutine(void) {
 	int 	dice;
-	
 
 	if (!this->_numberEnemies) // If no enemies create new wave of enemies!
-		this->spawnEnemies(this->_wave++);
+		this->spawnEnemies(++this->_wave);
 	for (int i = 0; i < this->_numberEnemiesFixed; i++) {
 		// check if this enemy is not dead
 		if (!this->enemy[i])
@@ -232,7 +225,7 @@ void Game::enemyRoutine(void) {
 
 void 	Game::drawGameInfo()
 {
-	mvprintw(this->_maxY - 1, 2, "Score: %d", this->_playerScore);
+	mvprintw(this->_maxY - 1, 2, "Score: %d Level: %d", this->_playerScore, this->_wave);
 }
 
 
@@ -246,12 +239,6 @@ void Game::start()  // Main Loop of the game
 		box(stdscr, 0, 0); // Draw a box around terminal
 		this->enemyRoutine(); // All logic for enemies
 		this->bulletsRoutine(); // All logic for bullets
-
-		/*  Need some function that will check whether any of the ships collided with bullets or vice versa.
-			When bullet hits something it should destroy that object and fix coresponding array (if it was enemy)
-			in case if bullet hit player well i don't know substract 1 life make it blink for 3 secs and put it in the origin
-			or something like this up to you...
-		*/
 		attron(COLOR_PAIR(1));
 		this->player->draw(); // Drawing player
 		attroff(COLOR_PAIR(1));
@@ -261,7 +248,6 @@ void Game::start()  // Main Loop of the game
 		this->drawBackground();
 		refresh(); // I have no fucking idea whether we need to refresh after clear or not.
 		usleep(DELAY); // HOW THIS WORKS? O_O 
-		
 	}
 }
 
@@ -270,11 +256,11 @@ void Game::end()  // Main Loop of the game
 	mvprintw(this->_maxY / 2, this->_maxX / 2 - 5, "GAME OVER :(");
 	mvprintw(this->_maxY / 2 + 3, this->_maxX / 2 - 9, "Your score is %d", this->_playerScore);
 	refresh(); 
+	system("killall -9 afplay");
+	this->playSound("sound/gameover2.wav");
 	sleep(3);
 	endwin();
-	
-	system("killall -9 afplay");
 	system("reset");
-	exit(1);
 	this->~Game();
+	exit(1);
 }
