@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:01:02 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 18:04:33 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 18:09:59 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "Ship.hpp"
 
 # define maxShip 25
-# define maxBullets 300
+# define maxBullets 200
 
 class Game {
 	

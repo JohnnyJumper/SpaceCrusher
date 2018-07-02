@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Game.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: psprawka <psprawka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jtahirov <jtahirov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/01 02:24:10 by jtahirov          #+#    #+#             */
-/*   Updated: 2018/07/01 18:04:16 by jtahirov         ###   ########.fr       */
+/*   Updated: 2018/07/01 18:10:04 by jtahirov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,13 @@ void		Game::checkCollision()
 			this->end();
 		for (int j = 0; j < _numberEnemiesFixed; j++)
 		{
+			if (!this->enemy[j])
+				continue ;
 			if (this->enemy[j] && this->enemy[j]->getX() == this->bullets[i]->getX() &&
 				this->enemy[j]->getY() == this->bullets[i]->getY())
 			{
 					delete this->enemy[j];
 					this->enemy[j] = NULL;
-					dprintf(fd, "byeeee im killed (enemy) %d\n", this->_numberEnemies);
-					sleep(2);
-					// for (int x = j; x < this->_numberEnemies && enemy[x]; x++)
-					// 	enemy[x] = enemy[x + 1];
 					this->_numberEnemies--;
 					this->_playerScore++;
 			}
